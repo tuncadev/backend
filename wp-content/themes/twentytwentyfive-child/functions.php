@@ -22,10 +22,11 @@ add_action('init', function () {
 	$has_secret = isset($_GET['secret']) && $_GET['secret'] === SECRET_LOGIN_SLUG;
 
 	// Allow direct login via secret slug
-	if ($uri === '/' . SECRET_LOGIN_SLUG) {
+	if (trim($uri, '/') === SECRET_LOGIN_SLUG) {
 			require_once ABSPATH . 'wp-login.php';
 			exit;
 	}
+
 
 	// Let logged-in users go anywhere
 	if ($is_logged_in) return;
