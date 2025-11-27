@@ -12,7 +12,7 @@ add_action('template_redirect', function () {
 });
 
 /* restric access */
-
+/*
 add_action('init', function () {
 	$uri = $_SERVER['REQUEST_URI'] ?? '';
 	$is_login = str_contains($uri, '/wp-login.php');
@@ -37,7 +37,7 @@ add_action('init', function () {
 		exit;
 	}
 });
-
+*/
 
 
 // Allow WooCommerce REST API access
