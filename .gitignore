@@ -1,4 +1,17 @@
+# Ignore wp-config
 wp-config.php
+
+# Ignore well-known directory
 .well-known/*
-debug.log
+
+# Ignore htaccess
 .htaccess
+
+# Allow wp-content fully (but ignore some parts below)
+!wp-content/*
+
+# Ignore debug.log anywhere
+debug.log
+
+# Ignore mu-plugins (but keep folder)
+wp-content/mu-plugins/*
