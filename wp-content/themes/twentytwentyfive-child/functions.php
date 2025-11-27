@@ -14,29 +14,33 @@ add_action('template_redirect', function () {
 /* restric access */
 
 add_action('init', function () {
-	$uri = $_SERVER['REQUEST_URI'] ?? '';
-	$is_login = str_contains($uri, '/wp-login.php');
-	$is_admin = str_contains($uri, '/wp-admin');
+    $uri = $_SERVER['REQUEST_URI'] ?? '';
+    $is_login = str_contains($uri, '/wp-login.php');
+    $is_admin = str_contains($uri, '/wp-admin');
 
-	$is_logged_in = is_user_logged_in();
-	$has_secret = isset($_GET['secret']) && $_GET['secret'] === SECRET_LOGIN_SLUG;
+    $is_logged_in = is_user_logged_in();
+    $has_secret = isset($_GET['secret']) && $_GET['secret'] === SECRET_LOGIN_SLUG;
 
-	// Allow direct login via secret slug
-	if (trim($uri, '/') === SECRET_LOGIN_SLUG) {
-			require_once ABSPATH . 'wp-login.php';
-			exit;
-	}
+    // Allow direct login via secret slug (with/without slash)
+    if (trim($uri, '/') === SECRET_LOGIN_SLUG) {
+        require_once ABSPATH . 'wp-login.php';
+        exit;
+    }
 
+    // 🚑 Allow redirect_to after login even if WP cookies not yet processed
+    if (isset($_GET['redirect_to'])) {
+        return;
+    }
 
-	// Let logged-in users go anywhere
-	if ($is_logged_in) return;
+    // Let logged-in users go anywhere
+    if ($is_logged_in) return;
 
-	// Block direct access to login or admin pages
-	if (($is_login || $is_admin) && !$has_secret) {
-		status_header(404);
-		include get_404_template();
-		exit;
-	}
+    // Block direct access to login or admin pages
+    if (($is_login || $is_admin) && !$has_secret) {
+        status_header(404);
+        include get_404_template();
+        exit;
+    }
 });
 
 
