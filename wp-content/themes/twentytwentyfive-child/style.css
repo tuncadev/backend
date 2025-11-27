@@ -1,0 +1,13 @@
+/*
+Theme Name:     Twenty Twenty-Five Child
+Theme URI:      https://tunca.site/
+Description:    Custom child theme for headless WordPress setup.
+Author:         Ozgur Tunca
+Template:       twentytwentyfive
+Version:        1.0.0
+*/
+
+body {
+  /* Optional: hide all frontend output */
+  display: none;
+}
